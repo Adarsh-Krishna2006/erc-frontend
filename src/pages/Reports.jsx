@@ -5,9 +5,15 @@ import DataTable from '../components/DataTable';
 import StatsCard from '../components/StatsCard';
 import { useToast } from '../hooks/useToast';
 
-export const Reports = () => {
+export const Reports = ({ defaultTab }) => {
   const { addToast } = useToast();
-  const [activeTab, setActiveTab] = useState('revenue');
+  const [activeTab, setActiveTab] = useState(defaultTab || 'revenue');
+
+  useEffect(() => {
+    if (defaultTab) {
+      setActiveTab(defaultTab);
+    }
+  }, [defaultTab]);
   const [reportData, setReportData] = useState([]);
   const [revenueData, setRevenueData] = useState(null);
   const [loading, setLoading] = useState(false);

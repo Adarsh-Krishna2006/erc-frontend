@@ -18,6 +18,12 @@ import BillOfMaterials from './pages/BillOfMaterials';
 import Manufacturing from './pages/Manufacturing';
 import Reports from './pages/Reports';
 import AuditLogs from './pages/AuditLogs';
+import Users from './pages/Users';
+import Settings from './pages/Settings';
+import ProcurementRequests from './pages/ProcurementRequests';
+import StockLedger from './pages/StockLedger';
+import StockAdjustment from './pages/StockAdjustment';
+import WorkOrders from './pages/WorkOrders';
 
 export const App = () => {
   return (
@@ -118,6 +124,87 @@ export const App = () => {
                 element={
                   <ProtectedRoute allowedRoles={['admin']}>
                     <AuditLogs />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="users"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <Users />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="settings"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <Settings />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="procurement-requests"
+                element={
+                  <ProtectedRoute allowedRoles={['purchase_user', 'admin']}>
+                    <ProcurementRequests />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="stock-ledger"
+                element={
+                  <ProtectedRoute allowedRoles={['inventory_manager', 'admin']}>
+                    <StockLedger />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="stock-adjustment"
+                element={
+                  <ProtectedRoute allowedRoles={['inventory_manager', 'admin']}>
+                    <StockAdjustment />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="work-orders"
+                element={
+                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin']}>
+                    <WorkOrders />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="sales-overview"
+                element={
+                  <ProtectedRoute allowedRoles={['business_owner']}>
+                    <Reports defaultTab="sales" />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="purchase-overview"
+                element={
+                  <ProtectedRoute allowedRoles={['business_owner']}>
+                    <Reports defaultTab="purchase" />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="manufacturing-overview"
+                element={
+                  <ProtectedRoute allowedRoles={['business_owner']}>
+                    <Reports defaultTab="manufacturing" />
                   </ProtectedRoute>
                 }
               />

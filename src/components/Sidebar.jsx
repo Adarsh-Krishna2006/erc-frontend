@@ -24,8 +24,12 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       title: 'MAIN',
       items: [
         { path: '/', label: 'Dashboard', icon: LayoutDashboard, show: true },
-        { path: '/reports', label: 'Reports', icon: BarChart3, show: isAdmin || isOwner },
+        { path: '/sales-overview', label: 'Sales Overview', icon: BarChart3, show: isOwner },
+        { path: '/purchase-overview', label: 'Purchase Overview', icon: ClipboardList, show: isOwner },
+        { path: '/manufacturing-overview', label: 'Manufacturing Overview', icon: Warehouse, show: isOwner },
+        { path: '/reports', label: 'Reports', icon: BarChart3, show: isAdmin },
         { path: '/audit-logs', label: 'Audit Logs', icon: ShieldCheck, show: isAdmin },
+        { path: '/settings', label: 'Settings', icon: ShieldCheck, show: isAdmin },
       ],
     },
     {
@@ -34,15 +38,21 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
         { path: '/products', label: 'Products', icon: Package, show: true },
         { path: '/sales-orders', label: 'Sales Orders', icon: ShoppingCart, show: isSales || isAdmin || isOwner || isInventory },
         { path: '/purchase-orders', label: 'Purchase Orders', icon: ClipboardList, show: isPurchase || isAdmin || isOwner || isInventory },
-        { path: '/manufacturing', label: 'Manufacturing', icon: ClipboardList, show: isManufacturing || isAdmin || isOwner || isInventory },
+        { path: '/procurement-requests', label: 'Procurement Requests', icon: ClipboardList, show: isPurchase || isAdmin },
+        { path: '/manufacturing', label: 'Manufacturing Orders', icon: ClipboardList, show: isManufacturing || isAdmin || isOwner || isInventory },
+        { path: '/work-orders', label: 'Work Orders', icon: Zap, show: isManufacturing || isAdmin },
+        { path: '/bill-of-materials', label: 'Bill of Materials', icon: ClipboardList, show: isManufacturing || isAdmin || isOwner || isInventory },
         { path: '/customers', label: 'Customers', icon: Users, show: isSales || isAdmin || isOwner },
         { path: '/vendors', label: 'Vendors', icon: Truck, show: isPurchase || isAdmin || isOwner },
+        { path: '/users', label: 'Users', icon: Users, show: isAdmin },
       ],
     },
     {
       title: 'WAREHOUSE',
       items: [
         { path: '/inventory', label: 'Inventory', icon: Warehouse, show: isInventory || isAdmin || isOwner },
+        { path: '/stock-ledger', label: 'Stock Ledger', icon: ClipboardList, show: isInventory || isAdmin },
+        { path: '/stock-adjustment', label: 'Stock Adjustment', icon: Zap, show: isInventory || isAdmin },
       ],
     },
   ];

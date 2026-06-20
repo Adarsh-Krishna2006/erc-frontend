@@ -18,8 +18,13 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+  if (allowedRoles) {
+    const normalize = (role) => (role || '').toLowerCase().replace(/[\s_-]+/g, '');
+    const userRoleNormalized = normalize(user.role);
+    const allowedNormalized = allowedRoles.map((r) => normalize(r));
+    if (!allowedNormalized.includes(userRoleNormalized)) {
+      return <Navigate to="/" replace />;
+    }
   }
 
   return children;
