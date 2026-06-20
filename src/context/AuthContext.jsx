@@ -51,12 +51,12 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     checkRole,
-    isAdmin: user?.role === 'admin',
-    isSales: user?.role === 'sales_user' || user?.role === 'admin' || user?.role === 'business_owner',
-    isPurchase: user?.role === 'purchase_user' || user?.role === 'admin' || user?.role === 'business_owner',
-    isManufacturing: user?.role === 'manufacturing_user' || user?.role === 'admin' || user?.role === 'business_owner',
-    isInventory: user?.role === 'inventory_manager' || user?.role === 'admin' || user?.role === 'business_owner',
-    isOwner: user?.role === 'business_owner',
+    isAdmin: user?.role?.toLowerCase() === 'admin',
+    isSales: ['sales_user', 'sales user', 'admin', 'business_owner', 'business owner', 'inventory_manager', 'inventory manager'].includes(user?.role?.toLowerCase() || ''),
+    isPurchase: ['purchase_user', 'purchase user', 'admin', 'business_owner', 'business owner', 'inventory_manager', 'inventory manager'].includes(user?.role?.toLowerCase() || ''),
+    isManufacturing: ['manufacturing_user', 'manufacturing user', 'admin', 'business_owner', 'business owner', 'inventory_manager', 'inventory manager'].includes(user?.role?.toLowerCase() || ''),
+    isInventory: ['inventory_manager', 'inventory manager', 'admin', 'business_owner', 'business owner'].includes(user?.role?.toLowerCase() || ''),
+    isOwner: ['business_owner', 'business owner'].includes(user?.role?.toLowerCase() || ''),
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
