@@ -50,7 +50,7 @@ export const App = () => {
               <Route
                 path="customers"
                 element={
-                  <ProtectedRoute allowedRoles={['sales_user', 'admin', 'business_owner']}>
+                  <ProtectedRoute allowedRoles={['sales_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <Customers />
                   </ProtectedRoute>
                 }
@@ -59,7 +59,7 @@ export const App = () => {
               <Route
                 path="vendors"
                 element={
-                  <ProtectedRoute allowedRoles={['purchase_user', 'admin', 'business_owner']}>
+                  <ProtectedRoute allowedRoles={['purchase_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <Vendors />
                   </ProtectedRoute>
                 }
@@ -68,7 +68,7 @@ export const App = () => {
               <Route
                 path="sales-orders"
                 element={
-                  <ProtectedRoute allowedRoles={['sales_user', 'admin', 'business_owner']}>
+                  <ProtectedRoute allowedRoles={['sales_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <SalesOrders />
                   </ProtectedRoute>
                 }
@@ -77,7 +77,7 @@ export const App = () => {
               <Route
                 path="purchase-orders"
                 element={
-                  <ProtectedRoute allowedRoles={['purchase_user', 'admin', 'business_owner']}>
+                  <ProtectedRoute allowedRoles={['purchase_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <PurchaseOrders />
                   </ProtectedRoute>
                 }
@@ -95,7 +95,7 @@ export const App = () => {
               <Route
                 path="bill-of-materials"
                 element={
-                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin', 'business_owner']}>
+                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <BillOfMaterials />
                   </ProtectedRoute>
                 }
@@ -104,7 +104,7 @@ export const App = () => {
               <Route
                 path="manufacturing"
                 element={
-                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin', 'business_owner']}>
+                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <Manufacturing />
                   </ProtectedRoute>
                 }
@@ -149,7 +149,7 @@ export const App = () => {
               <Route
                 path="procurement-requests"
                 element={
-                  <ProtectedRoute allowedRoles={['purchase_user', 'admin']}>
+                  <ProtectedRoute allowedRoles={['purchase_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <ProcurementRequests />
                   </ProtectedRoute>
                 }
@@ -158,7 +158,7 @@ export const App = () => {
               <Route
                 path="stock-ledger"
                 element={
-                  <ProtectedRoute allowedRoles={['inventory_manager', 'admin']}>
+                  <ProtectedRoute allowedRoles={['inventory_manager', 'admin', 'business_owner']}>
                     <StockLedger />
                   </ProtectedRoute>
                 }
@@ -167,7 +167,7 @@ export const App = () => {
               <Route
                 path="stock-adjustment"
                 element={
-                  <ProtectedRoute allowedRoles={['inventory_manager', 'admin']}>
+                  <ProtectedRoute allowedRoles={['inventory_manager', 'admin', 'business_owner']}>
                     <StockAdjustment />
                   </ProtectedRoute>
                 }
@@ -176,7 +176,7 @@ export const App = () => {
               <Route
                 path="work-orders"
                 element={
-                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin']}>
+                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin', 'business_owner', 'inventory_manager']}>
                     <WorkOrders />
                   </ProtectedRoute>
                 }
