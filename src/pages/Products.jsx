@@ -131,12 +131,12 @@ export const Products = () => {
 
   const confirmDelete = async () => {
     try {
-      await api.delete(`/products/${productToDelete.id}`);
-      addToast('Product deleted successfully', 'success');
+      const response = await api.delete(`/products/${productToDelete.id}`);
+      addToast(response.data.message || 'Product deleted successfully', 'success');
       setIsDeleteOpen(false);
       fetchProducts();
     } catch (error) {
-      const errorMsg = error.response?.data?.detail || 'Failed to delete product';
+      const errorMsg = error.response?.data?.error || error.response?.data?.detail || 'Failed to delete product';
       addToast(errorMsg, 'error');
     }
   };
@@ -152,6 +152,21 @@ export const Products = () => {
     { key: 'sku', header: 'SKU' },
     { key: 'name', header: 'Name' },
     { key: 'category', header: 'Category' },
+    {
+      key: 'is_active',
+      header: 'Status',
+      render: (row) => (
+        <span
+          className={`px-2 py-0.5 rounded text-[10px] uppercase font-extrabold ${
+            row.is_active
+              ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400'
+              : 'bg-rose-50 text-rose-600 dark:bg-rose-950/20 dark:text-rose-450'
+          }`}
+        >
+          {row.is_active ? 'Active' : 'Inactive'}
+        </span>
+      ),
+    },
     {
       key: 'sales_price',
       header: 'Sales Price',
