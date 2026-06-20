@@ -20,7 +20,7 @@ export const Navbar = () => {
   };
 
   // Get first letter of username for avatar
-  const avatarLetter = user?.name ? user.name.charAt(0).toUpperCase() : 'U';
+  const avatarLetter = user?.username ? user.username.charAt(0).toUpperCase() : 'U';
 
   // Format role name to match the pill text (e.g. INVENTORY MANAGER)
   const roleName = user?.role ? user.role.replace('_', ' ').toUpperCase() : 'USER';
@@ -52,8 +52,8 @@ export const Navbar = () => {
           <div className="flex h-6.5 w-6.5 items-center justify-center rounded-full bg-sky-500 font-bold text-white text-xs shadow-sm">
             {avatarLetter}
           </div>
-          <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
-            {user?.name || 'User'}
+          <span className="text-xs font-bold text-slate-880 dark:text-slate-200">
+            {user?.username || 'User'}
           </span>
           <span className="text-[9px] font-extrabold bg-violet-100 dark:bg-violet-950 text-violet-600 dark:text-violet-400 px-2 py-0.5 rounded-lg border border-violet-200 dark:border-violet-900 ml-1.5 uppercase tracking-wider">
             {roleName}
