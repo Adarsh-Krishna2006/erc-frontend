@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth';
 
 export const BillOfMaterials = () => {
   const { addToast } = useToast();
-  const { isAdmin, isPurchase } = useAuth();
+  const { isAdmin, isPurchase, isManufacturing, isInventory } = useAuth();
   const [boms, setBoms] = useState([]);
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
@@ -261,13 +261,15 @@ export const BillOfMaterials = () => {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Bill of Materials (BoM)</h1>
           <p className="text-sm text-slate-400 font-medium">Define product structures, specify raw materials, and layout industrial manufacturing workflows.</p>
         </div>
-        <button
-          onClick={openCreateModal}
-          className="flex items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 px-4 text-sm font-bold text-white shadow-md hover:bg-violet-750 transition-all cursor-pointer shadow-violet-500/20"
-        >
-          <Plus className="h-4.5 w-4.5" />
-          Create BoM
-        </button>
+        {(isAdmin || isManufacturing || isInventory) && (
+          <button
+            onClick={openCreateModal}
+            className="flex items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 px-4 text-sm font-bold text-white shadow-md hover:bg-violet-750 transition-all cursor-pointer shadow-violet-500/20"
+          >
+            <Plus className="h-4.5 w-4.5" />
+            Create BoM
+          </button>
+        )}
       </div>
 
       <DataTable

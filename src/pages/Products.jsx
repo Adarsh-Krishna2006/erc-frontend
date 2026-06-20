@@ -6,9 +6,11 @@ import DataTable from '../components/DataTable';
 import Modal from '../components/Modal';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { useToast } from '../hooks/useToast';
+import { useAuth } from '../hooks/useAuth';
 
 export const Products = () => {
   const { addToast } = useToast();
+  const { isAdmin, isInventory, isOwner } = useAuth();
   const [products, setProducts] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [total, setTotal] = useState(0);
@@ -148,7 +150,7 @@ export const Products = () => {
     }).format(val);
   };
 
-  const columns = [
+  const baseColumns = [
     { key: 'sku', header: 'SKU' },
     { key: 'name', header: 'Name' },
     { key: 'category', header: 'Category' },
@@ -160,7 +162,7 @@ export const Products = () => {
           className={`px-2 py-0.5 rounded text-[10px] uppercase font-extrabold ${
             row.is_active
               ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400'
-              : 'bg-rose-50 text-rose-600 dark:bg-rose-950/20 dark:text-rose-450'
+              : 'bg-rose-50 text-rose-600 dark:bg-rose-950/20 dark:text-rose-455'
           }`}
         >
           {row.is_active ? 'Active' : 'Inactive'}
@@ -209,7 +211,11 @@ export const Products = () => {
         </div>
       ),
     },
-    {
+  ];
+
+  const columns = [...baseColumns];
+  if (isAdmin || isInventory || isOwner) {
+    columns.push({
       key: 'actions',
       header: 'Actions',
       render: (row) => (
@@ -230,8 +236,8 @@ export const Products = () => {
           </button>
         </div>
       ),
-    },
-  ];
+    });
+  }
 
   return (
     <div className="space-y-6">
@@ -240,13 +246,15 @@ export const Products = () => {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Product Catalog</h1>
           <p className="text-sm text-slate-400 font-medium">Manage product SKUs, prices, stock requirements and policies.</p>
         </div>
-        <button
-          onClick={openCreateModal}
-          className="flex items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 px-4 text-sm font-bold text-white shadow-md hover:bg-violet-750 transition-all cursor-pointer shadow-violet-500/20"
-        >
-          <Plus className="h-4.5 w-4.5" />
-          Add Product
-        </button>
+        {(isAdmin || isInventory || isOwner) && (
+          <button
+            onClick={openCreateModal}
+            className="flex items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 px-4 text-sm font-bold text-white shadow-md hover:bg-violet-750 transition-all cursor-pointer shadow-violet-500/20"
+          >
+            <Plus className="h-4.5 w-4.5" />
+            Add Product
+          </button>
+        )}
       </div>
 
       <DataTable
