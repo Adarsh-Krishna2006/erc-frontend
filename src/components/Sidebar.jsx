@@ -4,36 +4,47 @@ import {
   LayoutDashboard,
   Package,
   Users,
-  User,
   Truck,
   ShoppingCart,
   ClipboardList,
   Warehouse,
-  Layers,
-  Hammer,
   BarChart3,
   ShieldCheck,
   ChevronLeft,
   ChevronRight,
-  LogOut,
+  Zap,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 export const Sidebar = ({ collapsed, setCollapsed }) => {
-  const { user, logout, isAdmin, isSales, isPurchase, isManufacturing, isInventory, isOwner } = useAuth();
+  const { isAdmin, isSales, isPurchase, isManufacturing, isInventory, isOwner } = useAuth();
 
-  const menuItems = [
-    { path: '/', label: 'Main Desk', icon: LayoutDashboard, show: true },
-    { path: '/products', label: 'Item Blueprints', icon: Package, show: true },
-    { path: '/customers', label: 'Customers', icon: Users, show: isSales },
-    { path: '/vendors', label: 'Vendors', icon: Truck, show: isPurchase },
-    { path: '/sales-orders', label: 'Sales Orders', icon: ShoppingCart, show: isSales },
-    { path: '/purchase-orders', label: 'Purchase Orders', icon: ClipboardList, show: isPurchase },
-    { path: '/inventory', label: 'Warehouse Stock', icon: Warehouse, show: isInventory },
-    { path: '/bill-of-materials', label: 'Bill of Materials', icon: Layers, show: isManufacturing },
-    { path: '/manufacturing', label: 'Manufacturing', icon: Hammer, show: isManufacturing },
-    { path: '/reports', label: 'Reports', icon: BarChart3, show: isAdmin || isOwner },
-    { path: '/audit-logs', label: 'Audit Logs', icon: ShieldCheck, show: isAdmin },
+  const categories = [
+    {
+      title: 'MAIN',
+      items: [
+        { path: '/', label: 'Dashboard', icon: LayoutDashboard, show: true },
+        { path: '/reports', label: 'Reports', icon: BarChart3, show: isAdmin || isOwner },
+        { path: '/audit-logs', label: 'Audit Logs', icon: ShieldCheck, show: isAdmin },
+      ],
+    },
+    {
+      title: 'OPERATIONS',
+      items: [
+        { path: '/products', label: 'Products', icon: Package, show: true },
+        { path: '/sales-orders', label: 'Sales Orders', icon: ShoppingCart, show: isSales || isAdmin || isOwner || isInventory },
+        { path: '/purchase-orders', label: 'Purchase Orders', icon: ClipboardList, show: isPurchase || isAdmin || isOwner || isInventory },
+        { path: '/manufacturing', label: 'Manufacturing', icon: ClipboardList, show: isManufacturing || isAdmin || isOwner || isInventory },
+        { path: '/customers', label: 'Customers', icon: Users, show: isSales || isAdmin || isOwner },
+        { path: '/vendors', label: 'Vendors', icon: Truck, show: isPurchase || isAdmin || isOwner },
+      ],
+    },
+    {
+      title: 'WAREHOUSE',
+      items: [
+        { path: '/inventory', label: 'Inventory', icon: Warehouse, show: isInventory || isAdmin || isOwner },
+      ],
+    },
   ];
 
   return (
@@ -44,74 +55,62 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       <div className="flex h-16 items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800">
         {!collapsed ? (
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-600 font-bold text-white shadow-md shadow-violet-500/30">
-              S
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-400 text-white shadow-md shadow-blue-500/20">
+              <Zap className="h-5 w-5 fill-white text-white" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-extrabold text-slate-950 dark:text-white leading-none">Shiv Furniture</span>
-              <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase mt-1">CORE ERP TERMINAL</span>
-            </div>
+            <span className="text-lg font-bold text-sky-600 dark:text-sky-400">Mini ERP</span>
           </div>
         ) : (
-          <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-xl bg-violet-600 font-bold text-white shadow-md shadow-violet-500/30">
-            S
+          <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-400 text-white shadow-md shadow-blue-500/20">
+            <Zap className="h-5 w-5 fill-white text-white" />
           </div>
         )}
       </div>
 
       {/* Navigation Items */}
-      <nav className="flex-1 space-y-1 px-3 py-6 overflow-y-auto">
-        {menuItems
-          .filter((item) => item.show)
-          .map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                  isActive
-                    ? 'bg-violet-50 text-violet-600 dark:bg-violet-950/20'
-                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/40 hover:text-slate-900 dark:hover:text-slate-205'
-                }`
-              }
-            >
-              <item.icon className="h-5 w-5 shrink-0" />
-              {!collapsed && <span>{item.label}</span>}
-            </NavLink>
-          ))}
-      </nav>
+      <div className="flex-1 overflow-y-auto px-3 py-6 space-y-6">
+        {categories.map((category) => {
+          const visibleItems = category.items.filter((item) => item.show);
+          if (visibleItems.length === 0) return null;
 
-      {/* Footer Profile or Logout */}
-      <div className="p-4 border-t border-slate-200 dark:border-slate-800">
-        {!collapsed ? (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2.5 p-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-350 shrink-0">
-                <User className="h-4.5 w-4.5" />
-              </div>
-              <div className="min-w-0">
-                <div className="text-sm font-bold text-slate-950 dark:text-white truncate">{user?.name}</div>
-                <div className="text-[10px] font-semibold text-slate-450 dark:text-slate-550 capitalize truncate">
-                  {user?.role.replace('_', ' ')}
+          return (
+            <div key={category.title} className="space-y-1">
+              {!collapsed && (
+                <div className="px-3.5 mb-2 text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-wider">
+                  {category.title}
                 </div>
-              </div>
+              )}
+              {visibleItems.map((item) => (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                      isActive
+                        ? 'bg-violet-50 text-violet-600 dark:bg-violet-950/20'
+                        : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/40 hover:text-slate-900 dark:hover:text-slate-200'
+                    }`
+                  }
+                >
+                  <item.icon className="h-5 w-5 shrink-0" />
+                  {!collapsed && <span>{item.label}</span>}
+                </NavLink>
+              ))}
             </div>
-            <button
-              onClick={logout}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-2.5 px-4 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all cursor-pointer shadow-sm"
-            >
-              <LogOut className="h-4 w-4 text-slate-500" />
-              <span>Logout Secure Session</span>
-            </button>
-          </div>
+          );
+        })}
+      </div>
+
+      {/* Footer Copyright */}
+      <div className="p-4 border-t border-slate-200 dark:border-slate-800 text-center">
+        {!collapsed ? (
+          <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500">
+            © 2026 Mini ERP
+          </span>
         ) : (
-          <button
-            onClick={logout}
-            className="flex w-full items-center justify-center p-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 hover:text-rose-500 dark:hover:text-rose-400 transition-colors"
-            title="Logout"
-          >
-            <LogOut className="h-5 w-5" />
-          </button>
+          <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500">
+            '26
+          </span>
         )}
       </div>
 
