@@ -7,7 +7,7 @@ export const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 transition-colors duration-250">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-250">
       {/* Sidebar Navigation */}
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 

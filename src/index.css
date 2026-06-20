@@ -16,9 +16,27 @@
   --color-violet-950: #172554;
 }
 
+:root {
+  --bg: #f1f5f9;
+  --bg-alt: #ffffff;
+  --border: rgba(0, 0, 0, .08);
+  --text: #0f172a;
+  --text-muted: #475569;
+}
+
+.dark {
+  --bg: #0b0f1a;
+  --bg-alt: #101629;
+  --border: rgba(255, 255, 255, .08);
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+}
+
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 transition-colors duration-200 antialiased;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.25s ease, color 0.25s ease;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }

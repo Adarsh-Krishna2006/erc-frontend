@@ -49,10 +49,10 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 bottom-0 z-40 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}`}
+      className={`fixed top-0 left-0 bottom-0 z-40 flex flex-col border-r border-[var(--border)] bg-[var(--bg-alt)] transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'}`}
     >
       {/* Brand logo header */}
-      <div className="flex h-16 items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800">
+      <div className="flex h-16 items-center justify-between px-6 border-b border-[var(--border)]">
         {!collapsed ? (
           <div className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-400 text-white shadow-md shadow-blue-500/20">
@@ -102,7 +102,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       </div>
 
       {/* Footer Copyright */}
-      <div className="p-4 border-t border-slate-200 dark:border-slate-800 text-center">
+      <div className="p-4 border-t border-[var(--border)] text-center">
         {!collapsed ? (
           <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500">
             © 2026 Mini ERP
@@ -117,7 +117,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       {/* Collapse button */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute top-20 -right-3.5 z-50 flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 shadow-sm cursor-pointer"
+        className="absolute top-20 -right-3.5 z-50 flex h-7 w-7 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg-alt)] text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 shadow-sm cursor-pointer"
       >
         {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
       </button>

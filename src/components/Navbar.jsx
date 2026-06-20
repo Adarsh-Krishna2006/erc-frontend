@@ -26,7 +26,7 @@ export const Navbar = () => {
   const roleName = user?.role ? user.role.replace('_', ' ').toUpperCase() : 'USER';
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 px-6 glass">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-[var(--border)] bg-[var(--bg-alt)]/70 px-6 glass">
       {/* Title */}
       <div>
         <h2 className="text-lg font-bold text-slate-850 dark:text-white">Dashboard</h2>
@@ -48,7 +48,7 @@ export const Navbar = () => {
         </button>
 
         {/* User Info Badge */}
-        <div className="flex items-center gap-2 bg-slate-100/80 dark:bg-slate-800/80 px-3.5 py-1.5 rounded-full border border-slate-200/50 dark:border-slate-800">
+        <div className="flex items-center gap-2 bg-slate-100/50 dark:bg-slate-800/40 px-3.5 py-1.5 rounded-full border border-[var(--border)]">
           <div className="flex h-6.5 w-6.5 items-center justify-center rounded-full bg-sky-500 font-bold text-white text-xs shadow-sm">
             {avatarLetter}
           </div>
