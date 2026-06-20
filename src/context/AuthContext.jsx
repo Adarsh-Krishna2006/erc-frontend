@@ -40,6 +40,18 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const registerUser = async (userData) => {
+    setLoading(true);
+    try {
+      const response = await api.post('/auth/register', userData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const checkRole = (allowedRoles) => {
     if (!user) return false;
     return allowedRoles.includes(user.role);
@@ -50,6 +62,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     logout,
+    registerUser,
     checkRole,
     isAdmin: user?.role?.toLowerCase() === 'admin',
     isSales: ['sales_user', 'sales user', 'admin', 'business_owner', 'business owner', 'inventory_manager', 'inventory manager'].includes(user?.role?.toLowerCase() || ''),
