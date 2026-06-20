@@ -41,7 +41,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
         { path: '/procurement-requests', label: 'Procurement Requests', icon: ClipboardList, show: isPurchase || isAdmin },
         { path: '/manufacturing', label: 'Manufacturing Orders', icon: ClipboardList, show: isManufacturing || isAdmin || isOwner || isInventory },
         { path: '/work-orders', label: 'Work Orders', icon: Zap, show: isManufacturing || isAdmin },
-        { path: '/bill-of-materials', label: 'Bill of Materials', icon: ClipboardList, show: isManufacturing || isAdmin || isOwner || isInventory },
+        { path: '/bill-of-materials', label: 'Bill of Materials', icon: ClipboardList, show: isManufacturing || isAdmin || isOwner || isInventory || isPurchase },
         { path: '/customers', label: 'Customers', icon: Users, show: isSales || isAdmin || isOwner },
         { path: '/vendors', label: 'Vendors', icon: Truck, show: isPurchase || isAdmin || isOwner },
         { path: '/users', label: 'Users', icon: Users, show: isAdmin },

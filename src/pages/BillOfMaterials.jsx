@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Eye, Trash2, PlusCircle, MinusCircle } from 'lucide-react';
+import { Plus, Eye, Trash2, PlusCircle, MinusCircle, Check, X } from 'lucide-react';
 import api from '../services/api';
 import DataTable from '../components/DataTable';
 import Modal from '../components/Modal';
 import ConfirmDialog from '../components/ConfirmDialog';
+import StatusBadge from '../components/StatusBadge';
 import { useToast } from '../hooks/useToast';
+import { useAuth } from '../hooks/useAuth';
 
 export const BillOfMaterials = () => {
   const { addToast } = useToast();
+  const { isAdmin, isPurchase } = useAuth();
   const [boms, setBoms] = useState([]);
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
@@ -37,6 +40,26 @@ export const BillOfMaterials = () => {
       addToast('Failed to load Bill of Materials', 'error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleApproveBom = async (bomId) => {
+    try {
+      await api.post(`/bom/${bomId}/approve`);
+      addToast('Bill of Materials approved successfully', 'success');
+      fetchBoms();
+    } catch (error) {
+      addToast('Failed to approve BoM', 'error');
+    }
+  };
+
+  const handleRejectBom = async (bomId) => {
+    try {
+      await api.post(`/bom/${bomId}/reject`);
+      addToast('Bill of Materials rejected', 'success');
+      fetchBoms();
+    } catch (error) {
+      addToast('Failed to reject BoM', 'error');
     }
   };
 
@@ -185,6 +208,11 @@ export const BillOfMaterials = () => {
       render: (row) => `${row.operations?.length || 0} steps`,
     },
     {
+      key: 'status',
+      header: 'Status',
+      render: (row) => <StatusBadge status={row.status || 'pending'} />,
+    },
+    {
       key: 'actions',
       header: 'Actions',
       render: (row) => (
@@ -196,9 +224,27 @@ export const BillOfMaterials = () => {
           >
             <Eye className="h-4 w-4" />
           </button>
+          {(isAdmin || isPurchase) && (row.status === 'pending' || !row.status) && (
+            <>
+              <button
+                onClick={() => handleApproveBom(row.id)}
+                className="p-2 text-emerald-500 hover:text-emerald-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition-colors cursor-pointer"
+                title="Approve BoM"
+              >
+                <Check className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => handleRejectBom(row.id)}
+                className="p-2 text-rose-500 hover:text-rose-700 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-colors cursor-pointer"
+                title="Reject BoM"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </>
+          )}
           <button
             onClick={() => handleDeleteClick(row)}
-            className="p-2 text-slate-500 hover:text-rose-650 dark:hover:text-rose-450 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-2 text-slate-500 hover:text-rose-655 dark:hover:text-rose-455 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             title="Delete"
           >
             <Trash2 className="h-4 w-4" />
@@ -430,6 +476,13 @@ export const BillOfMaterials = () => {
       {/* Detail Modal */}
       <Modal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} title={`Bill of Materials: ${selectedBom?.product_name}`} size="lg">
         <div className="space-y-6">
+          <div className="flex items-center gap-4 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <span>Version: {selectedBom?.version}</span>
+            <span>•</span>
+            <span className="flex items-center gap-1.5">
+              Status: <StatusBadge status={selectedBom?.status || 'pending'} />
+            </span>
+          </div>
           {/* Components Section */}
           <div className="space-y-2">
             <h4 className="text-sm font-bold text-slate-850 dark:text-slate-200">Required Components (Raw Materials)</h4>
