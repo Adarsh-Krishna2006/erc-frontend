@@ -95,7 +95,7 @@ export const App = () => {
               <Route
                 path="bill-of-materials"
                 element={
-                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin', 'business_owner', 'inventory_manager', 'purchase_user']}>
+                  <ProtectedRoute allowedRoles={['manufacturing_user', 'admin', 'inventory_manager', 'purchase_user']}>
                     <BillOfMaterials />
                   </ProtectedRoute>
                 }

@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth';
 
 export const Products = () => {
   const { addToast } = useToast();
-  const { isAdmin, isInventory, isOwner } = useAuth();
+  const { isAdmin, isInventory, isOwner, isSales } = useAuth();
   const [products, setProducts] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [total, setTotal] = useState(0);
@@ -214,7 +214,7 @@ export const Products = () => {
   ];
 
   const columns = [...baseColumns];
-  if (isAdmin || isInventory || isOwner) {
+  if (isAdmin || isInventory || isOwner || isSales) {
     columns.push({
       key: 'actions',
       header: 'Actions',
@@ -229,7 +229,7 @@ export const Products = () => {
           </button>
           <button
             onClick={() => handleDeleteClick(row)}
-            className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-450 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-455 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             title="Delete"
           >
             <Trash2 className="h-4 w-4" />
@@ -246,7 +246,7 @@ export const Products = () => {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Product Catalog</h1>
           <p className="text-sm text-slate-400 font-medium">Manage product SKUs, prices, stock requirements and policies.</p>
         </div>
-        {(isAdmin || isInventory || isOwner) && (
+        {(isAdmin || isInventory || isOwner || isSales) && (
           <button
             onClick={openCreateModal}
             className="flex items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 px-4 text-sm font-bold text-white shadow-md hover:bg-violet-750 transition-all cursor-pointer shadow-violet-500/20"
