@@ -104,7 +104,7 @@ export const Login = () => {
                   placeholder="••••••••"
                   {...register('password', {
                     required: 'Password is required',
-                    minLength: { value: 6, message: 'Password must be at least 6 characters' },
+                    minLength: { value: 4, message: 'Password must be at least 4 characters' },
                   })}
                 />
                 <button
